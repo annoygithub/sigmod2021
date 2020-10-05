@@ -1,0 +1,10 @@
+CORE
+Main
+--function Main.main --max-nondet-string-length 10000
+^EXIT=10$
+^SIGNAL=0$
+^VERIFICATION FAILED$
+assertion at file Main\.java line 5 function .* bytecode-index 25: FAILURE
+\*\* 1 of .* failed
+--
+^warning: ignoring

@@ -1,0 +1,10 @@
+CORE
+Test
+--function Test.det 
+^EXIT=10$
+^SIGNAL=0$
+assertion at file Test.java line 11 .*: FAILURE
+--
+adding lemma .*nondet_infinite_array
+--
+Check that using the string dependence informations, no lemma involving arrays is added

@@ -1,0 +1,9 @@
+CORE
+Test
+--classpath wrong
+^EXIT=6$
+^SIGNAL=0$
+Could not find or load main class Test
+--
+--
+We override the default path. Hence, Test cannot be found.

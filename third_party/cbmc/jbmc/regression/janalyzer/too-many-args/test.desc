@@ -1,0 +1,6 @@
+CORE
+A
+B
+Please give exactly one class name, and/or use -jar jarfile or --gb goto-binary
+^EXIT=1$
+^SIGNAL=0$

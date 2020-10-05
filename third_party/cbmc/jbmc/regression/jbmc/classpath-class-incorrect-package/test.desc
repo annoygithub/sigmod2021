@@ -1,0 +1,9 @@
+CORE
+Test
+--classpath src
+^EXIT=6$
+^SIGNAL=0$
+Could not find or load main class Test
+--
+--
+Test.class is not in the right directory corresponding to its package.

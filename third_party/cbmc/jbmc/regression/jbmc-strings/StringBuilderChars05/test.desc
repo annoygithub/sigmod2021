@@ -1,0 +1,8 @@
+CORE
+StringBuilderChars05
+--function StringBuilderChars05.test --cp `../../../../scripts/format_classpath.sh . ../../../lib/java-models-library/target/core-models.jar`
+^EXIT=10$
+^SIGNAL=0$
+^VERIFICATION FAILED$
+--
+^warning: ignoring

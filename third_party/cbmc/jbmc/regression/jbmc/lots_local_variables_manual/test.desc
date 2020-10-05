@@ -1,0 +1,6 @@
+CORE
+ManyLocalVariables
+--function ManyLocalVariables.test
+VERIFICATION SUCCESSFUL
+^EXIT=0$
+^SIGNAL=0$

@@ -1,0 +1,432 @@
+# First, specify the types that will be used
+#enum ConstBool {
+#    "True", "False"
+#}
+
+enum ConstString {
+    {{ const_string | default('"abc"', true) }}
+}
+
+enum ConstInt {
+    {{ const_int | default('"1","-1","0"', true) }}
+}
+
+enum ConstAString {
+    "[]"
+}
+
+enum ConstAAny {
+    "[]"
+}
+
+enum ConstAStringAny {
+    "[]"
+}
+
+enum ConstMStringAny {
+    "{}"
+}
+
+value Int {
+    value: int;
+}
+
+value String {
+    strlen: int;
+}
+
+value Bool {
+    True: bool;
+}
+
+value Any;
+
+value AString {
+    size: int;
+}
+
+value AAny {
+    size: int;
+}
+
+value AStringAny {
+    size: int;
+}
+
+value MStringAny {
+    size: int;
+}
+
+{% if columns is defined and columns != None%}
+value Row;
+{% endif %}
+
+value Empty;
+
+# Next, specify the input/output of the synthesized program
+program SQL{{ program_type | default("(String, Bool) -> String", true) }};
+
+# Finally, specify the production rules
+#func constBool: Bool -> ConstBool;
+func constInt: Int -> ConstInt;
+func constString: String -> ConstString;
+#func constAString: AString -> ConstAString;
+#func constAAny: AAny -> ConstAAny;
+#func constAStringAny: AStringAny -> ConstAStringAny;
+#func constMStringAny: MStringAny -> ConstMStringAny;
+
+{% if columns is defined and columns != None %}
+func row: Row o -> {{ columns }};
+{% endif %}
+
+#func abs: Int o -> Int i {
+#    if value(i) > 0 then
+#        value(o) == value(i)
+#    else
+#        value(o) == -1 * value(i);
+#}
+func add: Int o -> Int a, Int b {
+    value(o) == value(a) + value(b);
+}
+func and: Bool o -> Bool a, Bool b {
+    if True(a) && True(b) then
+        True(o)
+    else
+        ! True(o);
+}
+func any_array1_int: AAny o -> Int a1 {
+    size(o) == 1;
+}
+func any_array1_string: AAny o -> String a1 {
+    size(o) == 1;
+}
+func any_array1_astring: AAny o -> AString a1 {
+    size(o) == 1;
+}
+func any_array1_any: AAny o -> Any a1 {
+    size(o) == 1;
+}
+func any_array2_any_int: AAny o -> Any a1, Int a2 {
+    size(o) == 2;
+}
+func any_array2_any_string: AAny o -> Any a1, String a2 {
+    size(o) == 2;
+}
+func any_array2_any_astring: AAny o -> Any a1, AString a2 {
+    size(o) == 2;
+}
+func any_array2_any_any: AAny o -> Any a1, Any a2 {
+    size(o) == 2;
+}
+func any_array2_int_int: AAny o -> Int a1, Int a2 {
+    size(o) == 2;
+}
+func any_array2_int_string: AAny o -> Int a1, String a2 {
+    size(o) == 2;
+}
+func any_array2_int_astring: AAny o -> Int a1, AString a2 {
+    size(o) == 2;
+}
+func any_array2_int_any: AAny o -> Int a1, Any a2 {
+    size(o) == 2;
+}
+func any_array2_string_int: AAny o -> String a1, Int a2 {
+    size(o) == 2;
+}
+func any_array2_string_string: AAny o -> String a1, String a2 {
+    size(o) == 2;
+}
+func any_array2_string_astring: AAny o -> String a1, AString a2 {
+    size(o) == 2;
+}
+func any_array2_string_any: AAny o -> String a1, Any a2 {
+    size(o) == 2;
+}
+func any_array2_astring_int: AAny o -> AString a1, Int a2 {
+    size(o) == 2;
+}
+func any_array2_astring_string: AAny o -> AString a1, String a2 {
+    size(o) == 2;
+}
+func any_array2_astring_astring: AAny o -> AString a1, AString a2 {
+    size(o) == 2;
+}
+func any_array2_astring_any: AAny o -> AString a1, Any a2 {
+    size(o) == 2;
+}
+func any_array_concat: AAny o -> AAny i1, AAny i2 {
+    size(o) == size(i1) + size(i2);
+}
+#func ascii: Int o -> String i {
+#    strlen(i) > 0 ==> 0 <= value(o) && value(o) <= 255;
+#}
+func astring_get: String o -> AString arr, Int i;
+func astring_len: Int o -> AString arr {
+    value(o) == size(arr);
+}
+func cast_astring2any: Any o -> AString i;
+func cast_int2any: Any o -> Int i;
+func cast_int2str: String o -> Int i;
+func cast_str2any: Any o -> String i;
+func cast_str2int: Int o -> String i;
+func concat: String o -> String i1, String i2 {
+    strlen(o) == strlen(i1) + strlen(i2);
+}
+#func concat_ws: String o -> String sep, String i1, String i2 {
+#    strlen(o) == strlen(sep) + strlen(i1) + strlen(i2);
+#}
+func div: Int o -> Int a, Int b {
+    value(o) == value(a) / value(b);
+}
+func eq: Bool o -> Int a, Int b {
+    if value(a) == value(b) then
+        True(o)
+    else
+        ! True(o);
+}
+func eq_str: Bool o -> String i1, String i2 {
+    True(o) ==> strlen(i1) == strlen(i2);
+}
+
+#func format_string_ss: String o -> String fmt, String s1, String s2 {
+#    strlen(o) <= strlen(fmt) + strlen(s1) + strlen(s2) - 4;
+#}
+#func ge: Bool o -> Int a, Int b {
+#    if value(a) >= value(b) then
+#        True(o)
+#    else
+#        ! True(o);
+#}
+#func gt: Bool o -> Int a, Int b {
+#    if value(a) > value(b) then
+#        True(o)
+#    else
+#        ! True(o);
+#}
+func if_astr: AString o -> Bool b, AString i1, AString i2 {
+    if True(b) then
+        size(o) == size(i1)
+    else
+        size(o) == size(i2);
+}
+func if_bool: Bool o -> Bool b, Bool b1, Bool b2 {
+    if True(b) then
+        True(o) == True(b1)
+    else
+        True(o) == True(b2);
+}
+func if_int: Int o -> Bool b, Int i1, Int i2 {
+    if True(b) then
+        value(o) == value(i1)
+    else
+        value(o) == value(i2);
+}
+func if_str: String o -> Bool b, String i1, String i2 {
+    if True(b) then 
+        strlen(o) == strlen(i1) 
+    else 
+        strlen(o) == strlen(i2);
+}
+#func initcap: String o -> String i {
+#    strlen(o) == strlen(i);
+#}
+#func int: Int o -> String i;
+func le: Bool o -> Int a, Int b {
+    if value(a) <= value(b) then
+        True(o)
+    else
+        ! True(o);
+}
+#func int2char: String o -> Int i {
+#    strlen(o) == 1;
+#}
+func length: Int o -> String s {
+    value(o) == strlen(s);
+}
+#func levenshtein: Int o -> String s1, String s2 {
+#    value(o) <= strlen(s1) || value(o) <= strlen(s2);
+#}
+#func locate: Int p -> String sub, String i {
+#    0 <= value(p);
+#    value(p) <= strlen(i) - strlen(sub);
+#}
+func locate2: Int p -> String sub, String i, Int f {
+    value(p) == 0 || (value(p) >= value(f) && value(p) <= strlen(i) - strlen(sub));
+}
+#func lower: String o -> String i {
+#    strlen(o) == strlen(i);
+#}
+#func lpad: String o -> String i, Int l{
+#    value(l) >= 0 ==> strlen(o) == value(l);
+#}
+#func lpad2: String o -> String i, Int l, String pad{
+#    value(l) >= 0 ==> strlen(o) == value(l);
+#}
+func lt: Bool o -> Int a, Int b {
+    if value(a) < value(b) then
+        True(o)
+    else
+        ! True(o);
+}
+#func ltrim: String o -> String i {
+#    strlen(o) <= strlen(i);
+#}
+#func ltrim2: String o -> String i, String delim{
+#    strlen(o) <= strlen(i);
+#}
+#func map_string_any2_int: MStringAny -> String, Int;
+#func map_string_any2_string: MStringAny -> String, String;
+#func map_string_any2_astring: MStringAny -> String, AString;
+#func map_string_any2_any: MStringAny -> String, Any;
+func map_string_any_concat: MStringAny o -> MStringAny i1, MStringAny i2 {
+    size(o) <= size(i1) + size(i2);
+}
+func map_string_any_from_arrays: MStringAny o -> AString as, AAny aa {
+    size(as) == size(aa) ==> size(o) == size(as);
+}
+func map_string_any_keys: AString o -> MStringAny i {
+    size(o) == size(i);
+}
+func map_string_any_values: AAny o -> MStringAny i {
+    size(o) == size(i);
+}
+#func max: Int o -> Int a, Int b {
+#    if value(a) >= value(b) then
+#        value(o) == value(a)
+#    else
+#        value(o) == value(b);
+#}
+#func min: Int o -> Int a, Int b {
+#    if value(a) <= value(b) then
+#        value(o) == value(a)
+#    else
+#        value(o) == value(b);
+#}
+func mod: Int o -> Int a, Int b {
+    value(b) != 0 ==> value(o) == value(a) % value(b);
+}
+func mul: Int o -> Int a, Int b {
+    value(o) == value(a) * value(b);
+}
+#func neg: Int o -> Int i {
+#    value(o) == -1 * value(i);
+#}
+func neq: Bool o -> Int a, Int b {
+    if value(a) != value(b) then
+        True(o)
+    else
+        ! True(o);
+}
+func not: Bool o -> Bool i {
+    if True(i) then
+        ! True(o)
+    else
+        True(o);
+}
+func or: Bool o -> Bool a, Bool b {
+    if True(a) || True(b) then
+        True(o)
+    else
+        ! True(o);
+}
+#func overlay: String o -> String i, String r, Int f {
+#    strlen(o) >= strlen(i);
+#}
+# TODO: constraints
+#func overlay2: String o -> String i, String r, Int f, Int t;
+func pow: Int o -> Int a, Int b;
+#func repeat: String o -> String i, Int r {
+#    if value(r) > 0 then
+#        strlen(o) == strlen(i) * value(r)
+#    else
+#        strlen(o) == 0;
+#}
+#func replace: String o -> String i, String m {
+#    strlen(o) <= strlen(i);
+#}
+func replace2: String o -> String i, String m, String r {
+    strlen(r) >= strlen(m) ==> strlen(o) >= strlen(i);
+    strlen(r) < strlen(m) ==> strlen(o) <= strlen(i);
+}
+#func reverse: String o -> String i {
+#    strlen(o) == strlen(i);
+#}
+#func right: String o -> String i, Int l {
+#    value(l) >= strlen(i) ==> strlen(o) == strlen(i);
+#    (0 <= value(l) && value(l) < strlen(i)) ==> strlen(o) == value(l);
+#    value(l) < 0 ==> strlen(o) == 0;
+#}
+#func rpad: String o -> String i, Int l{
+#    value(l) >= 0 ==> strlen(o) == value(l);
+#}
+#func rpad2: String o -> String i, Int l, String pad{
+#    value(l) >= 0 ==> strlen(o) == value(l);
+#}
+#func rtrim: String o -> String i {
+#    strlen(o) <= strlen(i);
+#}
+#func rtrim2: String o -> String i, String delim{
+#    strlen(o) <= strlen(i);
+#}
+#func split: AString o -> String s, String delim {
+#    size(o) <= strlen(s);
+#}
+#func soundex: String o -> String i {
+#    strlen(o) == 4;
+#}
+func string_any_array_zip: AStringAny o -> AString as, AAny aa {
+    size(as) == size(aa) ==> size(o) == size(as);
+}
+func string_array0: AString o -> Int _ {
+    size(o) == 0;
+}
+func string_array1: AString o -> String a {
+    size(o) == 1;
+}
+func string_array2: AString o -> String a, String b {
+    size(o) == 2;
+}
+func string_array_concat: AString o -> AString a, AString b {
+    size(o) == size(a) + size(b);
+}
+func string_array_contains: Bool o -> AString a, String b {
+    True(o) ==> size(a) > 0;
+}
+func string_array_intersect: AString o -> AString a1, AString a2 {
+    if size(a1) >= size(a2) then
+        size(o) <= size(a2)
+    else
+        size(o) <= size(a1);
+}
+func string_array_join: String o -> AString a, String sep {
+    strlen(o) >= strlen(sep) * (size(a)-1);
+}
+func sub: Int o -> Int a, Int b {
+    value(o) == value(a) - value(b);
+}
+#func substring: String o -> String i, Int p {
+#    strlen(o) <= strlen(i);
+#}
+func substring2: String o -> String i, Int p, Int l{
+    strlen(o) <= strlen(i);
+}
+func substring_index: String o -> String i, String delim, Int l {
+    strlen(delim) > 0 ==> strlen(o) <= strlen(i);
+}
+#func translate: String o -> String i, String f, String t {
+#    strlen(f) == strlen(t) ==> strlen(o) == strlen(i);
+#}
+func trim: String o -> String i {
+    strlen(o) <= strlen(i);
+}
+#func trim2: String o -> String t, String i {
+#    strlen(o) <= strlen(i);
+#}
+#func unbase64: String o -> String i {
+#    strlen(i) % 4 == 0 ==> (strlen(i) / 4 * 3 >= strlen(o) && strlen(o) > strlen(i) / 4 * 3 - 3);
+#}
+#func upper: String o -> String i {
+#    strlen(o) == strlen(i);
+#}
+
+func empty: Empty -> Empty;

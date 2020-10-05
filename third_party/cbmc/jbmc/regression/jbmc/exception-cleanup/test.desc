@@ -1,0 +1,11 @@
+CORE
+Test
+--function Test.main
+^EXIT=0$
+^SIGNAL=0$
+^VERIFICATION SUCCESSFUL$
+0 remaining after simplification$
+--
+^warning: ignoring
+--
+The function "unreachable" should be successfully noted as unreachable by symex.

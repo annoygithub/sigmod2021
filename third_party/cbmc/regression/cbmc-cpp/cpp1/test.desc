@@ -1,0 +1,10 @@
+CORE
+main.cpp
+--unwind 1 --unwinding-assertions
+^EXIT=0$
+^SIGNAL=0$
+^VERIFICATION SUCCESSFUL$
+--
+^warning: ignoring
+--
+This has been reported as #661.

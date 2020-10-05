@@ -1,0 +1,7 @@
+CORE
+indirect/IndirectVirtualCall
+--function indirect.IndirectVirtualCall.main
+^EXIT=10$
+^SIGNAL=0$
+--
+^Invariant check failed$

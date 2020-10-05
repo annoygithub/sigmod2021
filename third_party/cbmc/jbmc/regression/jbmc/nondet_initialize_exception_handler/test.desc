@@ -1,0 +1,6 @@
+CORE
+JavaExceptionTest
+--function JavaExceptionTest.test
+^VERIFICATION SUCCESSFUL$
+^EXIT=0$
+^SIGNAL=0$

@@ -1,0 +1,13 @@
+CORE
+Test
+--function Test.main --show-vcc
+^EXIT=0$
+^SIGNAL=0$
+^\{-\d+\} symex_dynamic::dynamic_object1#2\.\.@Generic\.\.@java.lang.Object\.\.@class_identifier = "java::GenericSub"$
+^\{-\d+\} symex_dynamic::dynamic_object1#2\.\.@Generic\.\.key = NULL$
+^\{-\d+\} symex_dynamic::dynamic_object1#3\.\.@Generic\.\.x = 5$
+--
+byte_extract_(big|little)_endian
+--
+The use of generics should not result in any byte_extract operations being
+generated for this test.

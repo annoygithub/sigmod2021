@@ -1,0 +1,13 @@
+CORE
+Main
+--context-include Main.
+^EXIT=10$
+^SIGNAL=0$
+.* line 12 assertion at file Main.java line 12 .*: SUCCESS
+.* line 13 assertion at file Main.java line 13 .*: FAILURE
+.* line 14 assertion at file Main.java line 14 .*: FAILURE
+.* line 15 assertion at file Main.java line 15 .*: FAILURE
+--
+WARNING: no body for function .*
+--
+Tests that only methods from the specified class are included.

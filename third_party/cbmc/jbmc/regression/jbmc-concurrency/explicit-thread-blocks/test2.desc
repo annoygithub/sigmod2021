@@ -1,0 +1,6 @@
+CORE
+A
+--function 'A.me2:()V' --java-threading
+^EXIT=10$
+^SIGNAL=0$
+^VERIFICATION FAILED

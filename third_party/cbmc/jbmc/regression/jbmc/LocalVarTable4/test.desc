@@ -1,0 +1,7 @@
+CORE
+live_range_exception
+--function live_range_exception.main
+^EXIT=0$
+^SIGNAL=0$
+^VERIFICATION SUCCESSFUL$
+--

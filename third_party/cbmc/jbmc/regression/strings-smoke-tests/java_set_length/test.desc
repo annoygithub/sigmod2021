@@ -1,0 +1,10 @@
+CORE
+test_set_length
+--function test_set_length.main --cp `../../../../scripts/format_classpath.sh . ../../../lib/java-models-library/target/core-models.jar`
+^EXIT=10$
+^SIGNAL=0$
+^\[.*assertion.1\].* line 9.* SUCCESS$
+^\[.*assertion.2\].* line 10.* SUCCESS$
+^\[.*assertion.3\].* line 11.* FAILURE$
+--
+non equal types
